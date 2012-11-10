@@ -78,8 +78,8 @@ class Udacity:
         for item in content:
             #print '  >>  ' + item['name']
 
-            dlPathName = name[0]['name'].rstrip(' ') + '/'
-            pathName   = name[0]['name'].rstrip(' ') + '/' + item['name']
+            dlPathName = self._renameFolder(name[0]['name'].rstrip(' '))
+            pathName   = dlPathName + '/' + item['name']
 
             try:
                 os.makedirs(dlPathName)
@@ -138,8 +138,11 @@ class Udacity:
                 sys.stdout.flush()
 
 
+    def _renameFolder(self, name):
+        name = re.sub("[^A-Za-z0-9\.\(\)\_\s\-]", "", name.replace(':', '-'))
+        name = re.sub(" +", " ", name)
+        return name
 
 
 x = Udacity('cs101')
 x.downloadTree()
-
